@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revelação de Texto A4 3D</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #3cff9d;
+            margin: 0;
+            font-family: 'Georgia', serif;
+            perspective: 2000px;
+        }
+
+        .circulo-fundo {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            background: #82f3bb;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 50px rgba(141, 60, 121, 0.8), 0 0 30px rgba(255,255,255,0.02);
+            cursor: pointer;
+        }
+
+        .container-pilha {
+            position: relative;
+            width: 210px;
+            height: 297px;
+            transform-style: preserve-3d;
+            /* Estado inicial: Deitado e inclinado */
+            transform: rotateX(60deg) rotateZ(-20deg);
+            transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        .folha-a4 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 2px;
+            padding: 30px 20px;
+            box-sizing: border-box;
+            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 10px 10px 40px rgba(0,0,0,0.6);
+            border: 1px solid #ddd;
+            backface-visibility: hidden;
+        }
+
+        /* CONFIGURAÇÃO DO EIXO Z (Pilha centralizada) */
+        .c1 { z-index: 3; transform: translateZ(0px); }
+        .c2 { z-index: 2; transform: translateZ(-35px); background: #fdfdfd; }
+        .c3 { z-index: 1; transform: translateZ(-70px); background: #f9f9f9; }
+
+        /* --- CONTROLE DO TEXTO (Invisível por padrão) --- */
+        .conteudo-texto {
+            opacity: 0; /* Totalmente transparente */
+            transform: translateY(10px); /* Leve deslocamento para efeito de subida */
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            pointer-events: none; /* Evita interações enquanto invisível */
+        }
+
+        /* --- HOVER: REVELAÇÃO TOTAL --- */
+
+        /* Levanta a pilha */
+        .circulo-fundo:hover .container-pilha {
+            transform: rotateX(0deg) rotateZ(0deg);
+        }
+
+        /* Abre os cartões em pé */
+        .circulo-fundo:hover .c1 { transform: translateX(-250px) translateZ(0); }
+        .circulo-fundo:hover .c2 { transform: translateZ(100px); background: #fff; }
+        .circulo-fundo:hover .c3 { transform: translateX(250px) translateZ(0); }
+
+        /* Torna o texto visível com delay (espera a animação de abertura) */
+        .circulo-fundo:hover .conteudo-texto {
+            opacity: 1;
+            transform: translateY(0);
+            transition-delay: 0.4s; /* Só aparece após abrir */
+        }
+
+        /* Estilização das "Folhas" */
+        h2 { font-size: 15px; color: #1a1a1a; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; text-align: center; }
+        p { font-size: 11px; line-height: 1.6; color: #444; text-align: justify; margin-bottom: 15px; }
+        .linha-assinatura { width: 100px; height: 1px; background: #ddd; margin-top: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <div class="circulo-fundo">
+        <div class="container-pilha">
+           
+            <div class="folha-a4 c1">
+                <div class="conteudo-texto">
+                    <h2>CERTIFICADO DE ORIGEM</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris feugiat porta eros, vel porta lectus dictum eget. Curabitur maximus sem at risus pulvinar, vel euismod lorem elementum.
+                    </p>
+                    <div class="linha-assinatura"></div>
+                </div>
+            </div>
+
+            <div class="folha-a4 c2">
+                <div class="conteudo-texto">
+                    <h2>MEMORANDO INTERNO</h2>
+                    <p>
+                        Aviso importante: todos os processos de design 3D devem seguir as diretrizes de perspectiva e profundidade do eixo Z. Mantenha a organização da pilha para garantir fluidez.
+                    </p>
+                    <div class="linha-assinatura"></div>
+                </div>
+            </div>
+
+            <div class="folha-a4 c3">
+                <div class="conteudo-texto">
+                    <h2>CONTRATO DE SERVIÇO</h2>
+                    <p>
+                        Fica estabelecido que o efeito de hover revelará o conteúdo apenas sob demanda do usuário. Este documento é gerado automaticamente para fins de demonstração visual.
+                    </p>
+                    <div class="linha-assinatura"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
